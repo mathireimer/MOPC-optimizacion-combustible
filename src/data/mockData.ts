@@ -83,7 +83,7 @@ export const mockCargas: CargaCombustible[] = [
     fecha: '2024-01-15',
     hora: '08:30',
     estacionServicio: 'Shell Ruta 2',
-    precio: 6800,
+    precio: 8200,
     observaciones: 'Carga completa',
     usuario: 'admin',
     createdAt: '2024-01-15T08:30:00Z'
@@ -98,7 +98,7 @@ export const mockCargas: CargaCombustible[] = [
     fecha: '2024-01-15',
     hora: '14:15',
     estacionServicio: 'Petrobras Centro',
-    precio: 5100,
+    precio: 7500,
     usuario: 'chofer1',
     createdAt: '2024-01-15T14:15:00Z'
   },
@@ -112,7 +112,7 @@ export const mockCargas: CargaCombustible[] = [
     fecha: '2024-01-16',
     hora: '09:45',
     estacionServicio: 'COPETROL Norte',
-    precio: 2040,
+    precio: 8800,
     usuario: 'admin',
     createdAt: '2024-01-16T09:45:00Z'
   }
@@ -123,6 +123,6 @@ export const generateMockChartData = () => {
   return months.map(month => ({
     month,
     litros: Math.floor(Math.random() * 1000) + 500,
-    gastos: Math.floor(Math.random() * 3000000) + 1000000
+    gastos: Math.floor(Math.random() * 8000000) + 3500000
   }));
 };
