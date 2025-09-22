@@ -83,7 +83,7 @@ export const mockCargas: CargaCombustible[] = [
     fecha: '2024-01-15',
     hora: '08:30',
     estacionServicio: 'Shell Ruta 2',
-    precio: 8200,
+    precio: 1640000, // 200L * 8200 Gs/L
     observaciones: 'Carga completa',
     usuario: 'admin',
     createdAt: '2024-01-15T08:30:00Z'
@@ -98,7 +98,7 @@ export const mockCargas: CargaCombustible[] = [
     fecha: '2024-01-15',
     hora: '14:15',
     estacionServicio: 'Petrobras Centro',
-    precio: 7500,
+    precio: 1125000, // 150L * 7500 Gs/L
     usuario: 'chofer1',
     createdAt: '2024-01-15T14:15:00Z'
   },
@@ -112,7 +112,7 @@ export const mockCargas: CargaCombustible[] = [
     fecha: '2024-01-16',
     hora: '09:45',
     estacionServicio: 'COPETROL Norte',
-    precio: 8800,
+    precio: 528000, // 60L * 8800 Gs/L
     usuario: 'admin',
     createdAt: '2024-01-16T09:45:00Z'
   }
