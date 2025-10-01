@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '../types';
-import { mockUsers } from '../data/mockData';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { login as apiLogin } from "../lib/api";
 
 interface AuthContextType {
-  user: User | null;
-  login: (username: string, password: string) => boolean;
+  user: string | null;
+  token: string | null;
+  login: (username: string, password: string) => Promise<boolean>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -14,44 +14,51 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on app start
-    const savedUser = localStorage.getItem('mopc_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    const savedToken = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
+    if (savedToken && savedUser) {
+      setToken(savedToken);
+      setUser(savedUser);
     }
     setIsLoading(false);
   }, []);
 
-  const login = (username: string, password: string): boolean => {
-    // Simulated authentication
-    const foundUser = mockUsers.find(u => u.username === username);
-    
-    // For demo purposes, any password works
-    if (foundUser) {
-      setUser(foundUser);
-      localStorage.setItem('mopc_user', JSON.stringify(foundUser));
+  const login = async (username: string, password: string): Promise<boolean> => {
+    try {
+      const data = await apiLogin(username, password);
+      setToken(data.access_token);
+      setUser(username);
+
+      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("user", username);
+
       return true;
+    } catch (error) {
+      console.error("Error en login", error);
+      return false;
     }
-    return false;
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('mopc_user');
+    setToken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

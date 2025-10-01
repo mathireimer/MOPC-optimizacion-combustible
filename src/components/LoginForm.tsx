@@ -19,11 +19,12 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      const success = login(username, password);
+      // login ahora es async → devuelve Promise<boolean>
+      const success = await login(username, password);
       if (success) {
         toast({
           title: "Inicio de sesión exitoso",
-          description: "Bienvenido al sistema MOPC",
+          description: `Bienvenido ${username} al sistema MOPC 🚀`,
           variant: "default",
         });
       } else {
@@ -104,12 +105,10 @@ const LoginForm = () => {
               </Button>
             </form>
             
+            {/* Info dinámica: podés mostrar los usuarios creados en tu DB en vez de los mockUsers */}
             <div className="mt-6 text-sm text-muted-foreground">
-              <div className="space-y-1">
-                <p><strong>Usuarios de prueba:</strong></p>
-                <p>• Admin: usuario "admin", cualquier contraseña</p>
-                <p>• Chofer: usuario "chofer1", cualquier contraseña</p>
-              </div>
+              <p>ℹ️ Usa tus credenciales registradas en la base de datos MySQL.</p>
+              <p className="mt-1">Ejemplo: <code>admin / cualquier contraseña</code></p>
             </div>
           </CardContent>
         </Card>
