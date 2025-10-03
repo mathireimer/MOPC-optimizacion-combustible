@@ -10,7 +10,7 @@ import mysql.connector
 from .db import get_connection
 
 # Configuración básica
-SECRET_KEY = "supersecretkey"  # en producción usar un secreto más seguro
+SECRET_KEY = "supersecretkey"  # ⚠️ en producción usar un secreto más seguro
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -19,10 +19,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 app = FastAPI()
 
-# 🔹 Habilitar CORS para React
+# 🔹 Habilitar CORS para cualquier origen (más fácil)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # 👈 tu frontend
+    allow_origins=["*"],  # 👈 acepta cualquier origen
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,7 +32,7 @@ app.add_middleware(
 class Usuario(BaseModel):
     nombre: str
     email: str
-    password: str   # 👈 ahora sí
+    password: str   # también guardamos contraseña
 
 class Token(BaseModel):
     access_token: str
